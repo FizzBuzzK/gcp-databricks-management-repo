@@ -31,4 +31,4 @@ Google Cloud Storage (GCS)
         ↓
    Gold Layer (Business Analytics & Star Schema)
         ↓
-   BI Tools / SQL Analytics
+   SQL Analytics
