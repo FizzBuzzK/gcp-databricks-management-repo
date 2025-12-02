@@ -8,7 +8,7 @@
 
 | Description | Screenshot |
 |------|-------------|
-| Architecture | ![Architecture](images/architecture.png) |
+| Architecture | ![Architecture](images/architecture.PNG) |
 
 ---
 
