@@ -6,9 +6,9 @@
 
 ## Architecture & Pipeline Preview
 
-| Architecture |
-|--------------|
-| (images/architecture.png) |
+| Description | Screenshot |
+|------|-------------|
+| Architecture | ![Architecture](images/architecture.png) |
 
 ---
 
