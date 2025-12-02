@@ -9,6 +9,12 @@
 | Description | Screenshot |
 |------|-------------|
 | Architecture | ![Architecture](images/architecture.PNG) |
+| ETL Workflow | ![ETL](images/tasks.PNG) |
+| Raw Data | ![Raw](images/raw_product.PNG) |
+| Bronze Table | ![Bronze](images/bronze_product.PNG) |
+| Silver Table | ![Silver](images/silver_product.PNG) |
+| Gold Table | ![Gold](images/gold_product.PNG) |
+
 
 ---
 
