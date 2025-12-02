@@ -1,34 +1,158 @@
-# Real-Time Data Engineering Pipeline on Databricks & Google Cloud (GCP)
+# Real-Time Sales Data Engineering Pipeline on Databricks & Google Cloud (GCP)
 
-A **production-style, cloud-native data engineering project** that implements a full **Medallion Architecture (Bronze → Silver → Gold)** using **Databricks, PySpark, and Google Cloud Storage (GCS)**.  
-
-A **real-world streaming analytics platform** with automated ingestion, transformation, data quality enforcement, dimensional modeling, and analytics-ready gold tables.
-
-> Built with **industry best practices**: structured streaming, schema enforcement, checkpointing, environment isolation (DEV/UAT/PRD), and star schema modeling.
+**End-to-end cloud data engineering project implementing a production-grade Medallion Architecture (Bronze → Silver → Gold) using Databricks, PySpark, SQL, and Google Cloud Storage (GCS) for scalable batch and streaming analytics.**
 
 ---
 
-## Key Features
+## Architecture & Pipeline Preview
 
-- **Medallion Architecture** (Bronze → Silver → Gold)
-- **Structured Streaming with Checkpointing**
-- **Star Schema for Analytics**
-- **Fact & Dimension Tables**
-- **Auto Ingestion from GCS**
-- **Production-Grade Error Handling**
-- **Idempotent & Restart-Safe Pipelines**
+| Description | Screenshot |
+|------|-------------|
+| Architecture | ![Architecture](images/architecture.PNG) |
+| ETL Workflow | ![ETL](images/tasks.PNG) |
+| Raw Data | ![Raw](images/raw_product.PNG) |
+| Bronze Table | ![Bronze](images/bronze_product.PNG) |
+| Silver Table | ![Silver](images/silver_product.PNG) |
+| Gold Table | ![Gold](images/gold_product.PNG) |
+
 
 ---
 
-## Architecture Overview
+## Project Overview
+
+This project simulates a **real-world enterprise data platform** that ingests raw CSV data from **Google Cloud Storage**, processes it using **Databricks Structured Streaming**, and delivers **analytics-ready fact and dimension tables** for business intelligence and reporting.
+
+The pipeline follows the **industry-standard Medallion Architecture**:
+- **Bronze Layer** – Raw, immutable ingestion
+- **Silver Layer** – Cleaned, de-duplicated, standardized data
+- **Gold Layer** – Business-level **star schema** modeling for analytics
+
+This project demonstrates a **full data engineering lifecycle** including:
+- Cloud ingestion
+- Streaming transformations
+- Checkpoint-based fault tolerance
+- Dimensional modeling
+- SQL-based business analytics
+
+---
+
+## Tech Stack
+
+| Tool | Purpose |
+|------|----------|
+| **Databricks** | Distributed processing & structured streaming |
+| **Google Cloud Storage (GCS)** | Cloud data lake storage |
+| **Python (PySpark)** | ETL & streaming transformations |
+| **SQL** | Gold layer analytics |
+
+---
+
+## Dataset Description
+
+This project uses a **retail-style transactional dataset** consisting of:
+
+- `Product.csv`
+- `Customer.csv`
+- `Orders.csv`
+- `OrderDetails.csv`
+- `Employee.csv`
+- `Warehouse.csv`
+- `Region.csv`
+
+These datasets simulate:
+- Product catalogs
+- Customer information
+- Order transactions
+- Sales employees
+- Warehousing and regional distribution
+
+This structure enables **realistic fact & dimension modeling** with operational and analytical use cases.
+
+---
+
+## Medallion Architecture Breakdown
+
+### Bronze Layer — Raw Ingestion
+
+**Goal:** Preserve source data exactly as received.
+
+**Key Characteristics:**
+- Schema enforcement only (no transformations)
+- Append-only ingestion
+- Batch + streaming compatible
+- Full traceability to original source
+
+**Bronze Tables:**
+- `raw_product`
+- `raw_customer`
+- `raw_orders`
+- `raw_order_details`
+- `raw_employee`
+- `raw_warehouse`
+- `raw_region`
+
+---
+
+### Silver Layer — Cleaned & Conformed Data
+
+**Goal:** Standardize data and prepare it for analytics.
+
+**Transformations Applied:**
+1. Duplicate removal using `dropDuplicates`
+2. NULL handling using `coalesce`
+3. Type casting and standardization
+4. Business-rule enforcement
+5. Audit timestamp added (`Transformed_Time`)
+6. Stream-safe checkpoint recovery with Delta
+
+**Silver Tables:**
+- `silver_product`
+- `silver_customer`
+- `silver_orders`
+- `silver_order_details`
+- `silver_employee`
+- `silver_warehouse`
+- `silver_region`
+
+All Silver tables are written using **Databricks Structured Streaming** with:
+- **Exactly-once processing**
+- **Checkpoint-based recovery**
+- **Idempotent execution**
+
+---
+
+### Gold Layer — Analytics & Star Schema
+
+**Goal:** Deliver BI-ready analytical models.
+
+#### Dimension Tables
+- `dim_product`
+- `dim_customer`
+- `dim_employee`
+- `dim_warehouse`
+- `dim_region`
+- `dim_date`
+
+#### Fact Table
+- `fact_sales`
+
+**Modeling Features:**
+- Surrogate keys
+- Referential integrity
+- Type-1 dimension design
+- Transaction-level fact table
+
+---
+
+## End-to-End Data Flow
 
 ```text
-Google Cloud Storage (GCS)
+CSV Files (GCS)
         ↓
-   Bronze Layer (Raw Ingestion)
+Bronze Delta Tables
         ↓
-   Silver Layer (Cleansed & Conformed)
+Silver Cleaned Streaming Tables
         ↓
-   Gold Layer (Business Analytics & Star Schema)
+Gold Star Schema
         ↓
-   SQL Analytics
+SQL / BI / Analytics
